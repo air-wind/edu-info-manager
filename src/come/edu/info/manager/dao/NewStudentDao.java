@@ -2,51 +2,43 @@ package come.edu.info.manager.dao;
 
 import come.edu.info.manager.domain.Student;
 
-public class StudentDao implements BaseStudentDao {
-    private static final Student[] students = new Student[5];
+import java.util.ArrayList;
+
+public class NewStudentDao implements BaseStudentDao {
+    private static final ArrayList<Student> students = new ArrayList<>();
 
     static {
         Student student1 = new Student("2000", "xiaoming", "12", "1999");
         Student student2 = new Student("2001", "xiaowang", "12", "1999");
         Student student3 = new Student("2002", "xiaozhang", "12", "1999");
-        students[0] = student1;
-        students[1] = student2;
-        students[2] = student3;
+        students.add(student1);
+        students.add(student2);
+        students.add(student3);
     }
 
     public boolean addStudent(Student student) {
-        int index = -1;
-        for (int i = 0; i < students.length; i++) {
-            if (students[i] == null) {
-                index = i;
-                break;
-            }
-        }
-
-        if (index == -1) {
-            return false;
-        } else {
-            students[index] = student;
-            return true;
-        }
-
+        return students.add(student);
     }
 
     public Student[] findAllStudent() {
-        return students;
+        Student[] studentArray = new Student[students.size()];
+        for (int i1 = 0; i1 < students.size(); i1++) {
+            studentArray[i1] = students.get(i1);
+        }
+        return studentArray;
     }
 
     public void deleteStudentById(String sid) {
         int index = getStudentById(sid);
         if (index != -1) {
-            students[index] = null;
+            students.remove(index);
         }
     }
 
     public int getStudentById(String sid) {
         int index = -1;
-        for (int i = 0; i < students.length; i++) {
-            if (sid.equals(students[i].getSid())) {
+        for (int i = 0; i < students.size(); i++) {
+            if (sid.equals(students.get(i).getSid())) {
                 index = i;
                 return index;
             }
@@ -57,7 +49,7 @@ public class StudentDao implements BaseStudentDao {
     public void modifyStudent(String sid, Student student) {
         int index = getStudentById(sid);
         if (index != -1) {
-            students[index] = student;
+            students.set(index, student);
         }
     }
 }

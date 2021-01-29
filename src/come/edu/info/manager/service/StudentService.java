@@ -1,10 +1,19 @@
 package come.edu.info.manager.service;
 
+import come.edu.info.manager.dao.BaseStudentDao;
+import come.edu.info.manager.dao.NewStudentDao;
 import come.edu.info.manager.dao.StudentDao;
 import come.edu.info.manager.domain.Student;
+import come.edu.info.manager.factory.StudentDaoFactory;
 
 public class StudentService {
-    private StudentDao studentDao = new StudentDao();
+    //private StudentDao studentDao = new StudentDao();
+
+    //集合改进
+    //private NewStudentDao studentDao = new NewStudentDao();
+
+    //多态改进
+    private final BaseStudentDao studentDao = StudentDaoFactory.getStudentDao();
 
     public boolean addStudent(Student student) {
         return studentDao.addStudent(student);
